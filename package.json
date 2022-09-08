@@ -1,0 +1,28 @@
+{
+  "name": "vitruvian-test",
+  "version": "1.0.0",
+  "main": "web/index.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "shopify": "shopify",
+    "build": "shopify app build",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "scaffold": "shopify app scaffold",
+    "deploy": "shopify app deploy"
+  },
+  "dependencies": {
+    "@shopify/app": "3.9.1",
+    "@shopify/cli": "3.9.1",
+    "@shopify/polaris": "^10.1.0",
+    "@shopify/react-form": "^2.3.0",
+    "express": "^4.18.1",
+    "ngrok": "^4.3.3",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.4",
+    "sequelize-cli": "^6.4.1",
+    "webpack": "^4.46.0"
+  },
+  "author": "Sccrat"
+}
