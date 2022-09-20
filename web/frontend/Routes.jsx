@@ -1,5 +1,5 @@
 import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
-import { FormP } from "./components/Form";
+import { Table } from "./components/Table";
 
 /**
  * File-based routing.
@@ -31,6 +31,7 @@ export default function Routes({ pages}) {
     <ReactRouterRoutes>
       {routeComponents}
       <Route path="*" element={<NotFound />} />
+      <Route path="/feature" element={<Table />} />
     </ReactRouterRoutes>
   );
 }

@@ -36,7 +36,6 @@ export default function HomePage() {
               <p> Mediante esta herramienta podrás crear y centralizar
                 características de tus productos en un solo lugar.</p>
             </EmptyState>
-            <Link to="features/new">Dashboard</Link>
           </Card>
         </Layout.Section>
       </Layout>

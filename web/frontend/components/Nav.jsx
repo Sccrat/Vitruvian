@@ -14,15 +14,9 @@ export function Nav() {
                                 icon: HomeMinor,
                             },
                             {
-                                url: '/path/to/place',
-                                label: 'Orders',
+                                url: '/feature',
+                                label: 'Listado',
                                 icon: OrdersMinor,
-                                badge: '15',
-                            },
-                            {
-                                url: '/path/to/place',
-                                label: 'Products',
-                                icon: ProductsMinor,
                             },
                         ]}
                     />

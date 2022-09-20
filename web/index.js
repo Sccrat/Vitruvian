@@ -13,8 +13,7 @@ import redirectToAuth from "./helpers/redirect-to-auth.js";
 import { BillingInterval } from "./helpers/ensure-billing.js";
 import { AppInstallations } from "./app_installations.js";
 import { Router } from "express";
-// import { getUsers } from "./postgres.js";
-
+import * as Consultas from './consultas.js'
 
 
 
@@ -29,8 +28,8 @@ const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 const DEV_INDEX_PATH = `${process.cwd()}/frontend/`;
 const PROD_INDEX_PATH = `${process.cwd()}/frontend/dist/`;
 
-const DB_PATH = `${process.cwd()}/database.sqlite`;
-// const DB_PATH = "postgres://rzpekcvppdstgl:42388371ef77390bbb835fc39de8c562b24eb1a62525e4bd82ce0b7dbc1486f9@ec2-44-194-92-192.compute-1.amazonaws.com:5432/dd1f7porsuu4tr"
+// const DB_PATH = `${process.cwd()}/database.sqlite`;
+const DB_PATH = "postgres://rzpekcvppdstgl:42388371ef77390bbb835fc39de8c562b24eb1a62525e4bd82ce0b7dbc1486f9@ec2-44-194-92-192.compute-1.amazonaws.com:5432/dd1f7porsuu4tr"
 
 
 Shopify.Context.initialize({
@@ -113,9 +112,41 @@ export async function createServer(
     })
   );
 
-  app.get("/api", (req, res) => {
-    res.json({ message: "Hola desde el servidor!" });
+  app.get("/api", async (req, res) => {
+
+    Consultas.default.obtener()
+        .then(productos => {
+            console.log(productos);
+            return res.json({message:productos});
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).send("Error obteniendo productos");
+        });
   });
+
+  app.post('/api/insertar', async (req, res)=> {
+    console.log('====================================');
+    console.log('si llego');
+    console.log('====================================');
+    // Obtener el nombre y precio. Es lo mismo que
+    // const nombre = req.body.nombre;
+    // const precio = req.body.precio;
+    const { nombre, productos, codigo } = req.body;
+    if (!nombre || !productos|| !codigo) {
+        return res.status(500).send("No hay nombre o precio");
+    }
+    // Si todo va bien, seguimos
+    Consultas.default.insertar(nombre, productos, codigo)
+        .then(idProductoInsertado => {
+            console.log('====================================');
+            console.log('vamos bien',idProductoInsertado);
+            console.log('====================================');
+        })
+        .catch(err => {
+            return res.status(500).send("Error insertando producto");
+        });
+});
 
   app.get("/api/products/count", async (req, res) => {
     const session = await Shopify.Utils.loadCurrentSession(

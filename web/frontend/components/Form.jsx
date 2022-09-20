@@ -2,40 +2,60 @@ import {Form, FormLayout, Checkbox, TextField, Button,Page} from '@shopify/polar
 import {useState, useCallback} from 'react';
 
 export function FormP() {
-  const [product, setproduct] = useState('');
-  const [name, setName] = useState('');
-  const [code, setCode] = useState('');
+  const [productos, setproduct] = useState('');
+  const [nombre, setName] = useState('');
+  const [codigo, setCode] = useState('');
 
   const handleSubmit = useCallback((_event) => {
-    setName('');
-    setproduct('');
-    setCode('');
+    console.log('====================================');
+    console.log(productos,nombre,codigo);
+    console.log('====================================');
+    // return;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:{nombre,productos,codigo} 
+    };
+    console.log('====================================');
+    console.log(requestOptions);
+    console.log('====================================');
+    fetch('/api/insertar', requestOptions)
+        .then(idProductoInsertado => {
+            console.log('====================================');
+            console.log('bien');
+            console.log('====================================');
+        })
+        .catch(err => {
+            return res.status(500).send("Error insertando producto");
+        });
+
   }, []);
 
-  const handleProductChange = useCallback((value) => setproduct(value),[]);
+  const handleProductChange = useCallback((v) => setproduct(v),[]);
 
-  const handleNameChange = useCallback((value) => setName(value),[]);
+  const handleNameChange = useCallback((v1) => setName(v1),[]);
 
-  const handleCodeChange = useCallback((value) => setCode(value),[]);
+  const handleCodeChange = useCallback((v2) => setCode(v2),[]);
 
   return (
     <Page narrowWidth >
         <Form onSubmit={handleSubmit}>
         <FormLayout>
             <TextField
-            value={name}
+            value={nombre}
             onChange={handleNameChange}
             label="Nombre de la característica"
             type="text"
             />
             <TextField
-            value={product}
+            value={productos}
             onChange={handleProductChange}
             label="Producto asignado"
             type="text"
             />
             <TextField
-            value={code}
+            value={codigo}
             onChange={handleCodeChange}
             label="Código de la característica"
             type="text"
