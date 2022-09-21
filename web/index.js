@@ -125,7 +125,7 @@ export async function createServer(
         });
   });
 
-  app.post('/api/insertar', async (req, res)=> {
+  router.post('/api/insertar', async (req, res)=> {
     console.log('====================================');
     console.log('si llego');
     console.log('====================================');

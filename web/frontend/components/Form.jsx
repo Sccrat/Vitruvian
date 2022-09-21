@@ -6,7 +6,7 @@ export function FormP() {
   const [nombre, setName] = useState('');
   const [codigo, setCode] = useState('');
 
-  const handleSubmit = useCallback((_event) => {
+  const handleSubmit = ()=> {
     console.log('====================================');
     console.log(productos,nombre,codigo);
     console.log('====================================');
@@ -15,11 +15,12 @@ export function FormP() {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:{nombre,productos,codigo} 
+        body:JSON.stringify({nombre,productos,codigo}) 
     };
     console.log('====================================');
     console.log(requestOptions);
     console.log('====================================');
+    // return;
     fetch('/api/insertar', requestOptions)
         .then(idProductoInsertado => {
             console.log('====================================');
@@ -30,7 +31,7 @@ export function FormP() {
             return res.status(500).send("Error insertando producto");
         });
 
-  }, []);
+  };
 
   const handleProductChange = useCallback((v) => setproduct(v),[]);
 
